@@ -63,10 +63,18 @@ To get a local copy up and running follow these simple steps.
    npm install
    ```
 3. Create a `.env.local` file and add your MongoDB URI and NextAuth URL
-   ```
-   MONGO_URI=your_mongodb_uri
+   ```sh
+   MONGO_URI=your_mongodb_uri # This can be obtained from MongoDB Atlas after creating a cluster and database.
    NEXTAUTH_URL=http://localhost:3000
+
+   # Google OAuth credentials (for Google authentication)
+   GOOGLE_CLIENT_ID="your_google_client_id" # This can be obtained from the Google Cloud Console after creating a project and OAuth 2.0 credentials.
+   GOOGLE_CLIENT_SECRET="your_google_client_secret" # This can also be obtained from the Google Cloud
    ```
+   Ensure when you create the google auth credentials, you set the authorized redirect URI to: 
+   - `http://localhost:3000/api/auth/callback/google` for local development.
+   - `https://your-deployment-url/api/auth/callback/google` for production. 
+
 4. Run the development server
    ```sh
    npm run dev
