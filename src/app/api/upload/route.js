@@ -8,7 +8,8 @@ export async function POST(req) {
     const file = formData.get('file');
 
     const s3Client = new S3Client({
-      region: 'us-east-2',
+      region: 'auto', 
+      endpoint: process.env.S3_ENDPOINT, // <--- CRITICAL: Tells the SDK to talk to Cloudflare
       credentials: {
         accessKeyId: process.env.S3_ACCESS_KEY,
         secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
@@ -28,14 +29,15 @@ export async function POST(req) {
     await s3Client.send(new PutObjectCommand({
       Bucket: bucketName,
       Key: newFilename,
-      ACL: 'public-read',
+      // ACL: 'public-read', <--- REMOVED: Cloudflare R2 does not support S3 ACLs
       Body: Buffer.concat(chunks),
       ContentType: file.type,
     }));
 
-    const link = `https://${bucketName}.s3.amazonaws.com/${newFilename}`;
+    // Generate the link using your Public R2 URL or Custom Domain
+    //const link = `https://${bucketName}.s3.amazonaws.com/${newFilename}`;
+    const link = `${process.env.S3_PUBLIC_URL}/${newFilename}`;
 
     return Response.json(link);
-
   }
 }
