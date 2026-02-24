@@ -12,10 +12,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={lato.className}>
-        <main>
+      <body className={lato.className + " bg-slate-950 text-slate-50"}>
+        <main className="min-h-screen flex flex-col">
           <Header />
-          <div className="max-w-6xl mx-auto p-6 flex flex-col min-h-screen">
+          <div className="max-w-6xl mx-auto p-6 flex-1 flex flex-col">
             {children}
           </div>
           <Footer />

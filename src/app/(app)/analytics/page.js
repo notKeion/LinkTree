@@ -19,11 +19,36 @@ import {
   YAxis,
 } from "recharts";
 
-export const metadata = {
-  title: "LinkTri Clone | Analytics",
-  description:
-    "Share your links, social profiles, contact info and more on one page",
-};
+export async function generateMetadata() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return {
+      title: "LinkTri Clone | Analytics",
+      description: "View analytics for your LinkTri page.",
+    };
+  }
+
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    const page = await Page.findOne({ owner: session.user?.email });
+
+    const displayName = page?.displayName || session.user?.name || "Your Analytics";
+    const bio =
+      page?.bio ||
+      "See how many views and clicks your LinkTri profile is getting.";
+
+    return {
+      title: `${displayName} | Analytics`,
+      description: bio,
+    };
+  } catch (e) {
+    return {
+      title: "LinkTri Clone | Analytics",
+      description: "View analytics for your LinkTri page.",
+    };
+  }
+}
 export default async function AnalyticsPage() {
   mongoose.connect(process.env.MONGO_URI);
   const session = await getServerSession(authOptions);

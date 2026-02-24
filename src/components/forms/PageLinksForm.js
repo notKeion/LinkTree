@@ -7,6 +7,7 @@ import {
   faCloudArrowUp,
   faGripLines,
   faLink,
+  faFile,
   faPlus,
   faSave,
   faTrash,
@@ -63,12 +64,30 @@ export default function PageLinksForm({ page, user }) {
     });
   }
 
+  function handleFileUpload(ev, linkKeyForUpload) {
+    upload(ev, (uploadedFileUrl) => {
+      setLinks((prevLinks) => {
+        const newLinks = [...prevLinks];
+        newLinks.forEach((link) => {
+          if (link.key === linkKeyForUpload) {
+            link.url = uploadedFileUrl;
+            link.isFile = true;
+          }
+        });
+        return newLinks;
+      });
+    });
+  }
+
   function handleLinkChange(keyOfLinkToChange, prop, ev) {
     setLinks((prev) => {
       const newLinks = [...prev];
       newLinks.forEach((link) => {
         if (link.key === keyOfLinkToChange) {
           link[prop] = ev.target.value;
+          if (prop === "url") {
+            link.isFile = false;
+          }
         }
       });
       return newLinks;
@@ -84,11 +103,11 @@ export default function PageLinksForm({ page, user }) {
   return (
     <SectionBox>
       <form action={save}>
-        <h2 className="text-2xl font-bold mb-4">Links</h2>
+        <h2 className="text-2xl font-bold mb-4 text-slate-50">Links</h2>
         <button
           onClick={addNewLink}
           type="button"
-          className="text-blue-500 text-lg flex gap-2 items-center cursor-pointer"
+          className="text-indigo-400 text-lg flex gap-2 items-center cursor-pointer hover:text-indigo-300"
         >
           {isIconLoading ? (
                   <div className="animate-pulse bg-gray-300 w-4 h-4 rounded-full" />
@@ -115,7 +134,7 @@ export default function PageLinksForm({ page, user }) {
                 )}
                 </div>
                 <div className="text-center">
-                  <div className="bg-gray-300 relative aspect-square overflow-hidden w-16 h-16 inline-flex justify-center items-center rounded-full">
+                  <div className="bg-slate-800 relative aspect-square overflow-hidden w-16 h-16 inline-flex justify-center items-center rounded-full border border-slate-700">
                     {l.icon && (
                       <Image
                         className="w-full h-full object-cover"
@@ -128,7 +147,7 @@ export default function PageLinksForm({ page, user }) {
                     {!l.icon && (isIconLoading ? (
                       <div className="animate-pulse bg-gray-400 w-4 h-4 rounded-full" />
                     ) : (
-                      <FontAwesomeIcon size="xl" icon={faLink} />
+                      <FontAwesomeIcon size="xl" icon={l.isFile ? faFile : faLink} />
                     ))}
                   </div>
                   <div>
@@ -140,7 +159,7 @@ export default function PageLinksForm({ page, user }) {
                     />
                     <label
                       htmlFor={"icon" + l.key}
-                      className="border mt-2 p-2 flex items-center gap-1 text-gray-600 cursor-pointer mb-2 justify-center rounded-md hover:bg-gray-200 hover:text-gray-800"
+                      className="border border-slate-700 mt-2 p-2 flex items-center gap-1 text-slate-200 cursor-pointer mb-2 justify-center rounded-md hover:bg-slate-800 hover:text-slate-50"
                     >
                       {isIconLoading ? (
                         <div className="animate-pulse bg-gray-400 w-4 h-4 rounded-full" />
@@ -152,7 +171,7 @@ export default function PageLinksForm({ page, user }) {
                     <button
                       onClick={() => removeLink(l.key)}
                       type="button"
-                      className="w-full bg-gray-300 py-2 px-3 mb-2 h-full flex gap-2 items-center justify-center rounded-md hover:bg-red-500 hover:text-white cursor-pointer"
+                      className="w-full bg-slate-800 py-2 px-3 mb-2 h-full flex gap-2 items-center justify-center rounded-md hover:bg-red-500 hover:text-white cursor-pointer border border-slate-700"
                     >
                       {isIconLoading ? (
                         <div className="animate-pulse bg-gray-400 w-4 h-4 rounded-full" />
@@ -166,7 +185,7 @@ export default function PageLinksForm({ page, user }) {
                 <div className="grow">
                   <label className="input-label">Title:</label>
                   <input
-                    className="rounded-md"
+                    className="rounded-md bg-slate-950 border border-slate-700 text-slate-100"
                     value={l.title}
                     onChange={(ev) => handleLinkChange(l.key, "title", ev)}
                     type="text"
@@ -174,7 +193,7 @@ export default function PageLinksForm({ page, user }) {
                   />
                   <label className="input-label">Subtitle:</label>
                   <input
-                    className="rounded-md"
+                    className="rounded-md bg-slate-950 border border-slate-700 text-slate-100"
                     value={l.subtitle}
                     onChange={(ev) => handleLinkChange(l.key, "subtitle", ev)}
                     type="text"
@@ -182,18 +201,40 @@ export default function PageLinksForm({ page, user }) {
                   />
                   <label className="input-label">URL:</label>
                   <input
-                    className="rounded-md"
+                    className="rounded-md bg-slate-950 border border-slate-700 text-slate-100"
                     value={l.url}
                     onChange={(ev) => handleLinkChange(l.key, "url", ev)}
                     type="text"
                     placeholder="url"
                   />
+                  <div className="mt-2 flex flex-col sm:flex-row sm:items-center gap-2">
+                    <input
+                      onChange={(ev) => handleFileUpload(ev, l.key)}
+                      id={"file" + l.key}
+                      type="file"
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor={"file" + l.key}
+                      className="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-md border border-slate-700 bg-slate-900 text-slate-200 cursor-pointer hover:bg-slate-800 hover:text-slate-50"
+                    >
+                      {isIconLoading ? (
+                        <div className="animate-pulse bg-gray-400 w-4 h-4 rounded-full" />
+                      ) : (
+                        <FontAwesomeIcon icon={faCloudArrowUp} />
+                      )}
+                      <span>Upload file for this link</span>
+                    </label>
+                    <p className="text-xs text-slate-500">
+                      Uploaded files like PDFs will open in a new tab.
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
           </ReactSortable>
         </div>
-        <div className="border-t pt-4 mt-8 max-w-xs mx-auto">
+        <div className="border-t border-slate-800 pt-4 mt-8 max-w-xs mx-auto">
           <SubmitButton className="">
             {isIconLoading ? (
               <div className="animate-pulse bg-gray-400 w-4 h-4 rounded-full" />

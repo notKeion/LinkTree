@@ -10,7 +10,8 @@ import {
   faGithub, faInstagram, faInstagramSquare, faTelegram,
   faTiktok,
   faWhatsapp,
-  faYoutube
+  faYoutube,
+  faLinkedin
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faGripLines, faMobile, faPlus, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,6 +29,7 @@ export const allButtons = [
   { key: 'whatsapp', 'label': 'whatsapp', icon: faWhatsapp },
   { key: 'github', 'label': 'github', icon: faGithub },
   { key: 'telegram', 'label': 'telegram', icon: faTelegram },
+  { key: 'linkedIn', 'label': 'linkedIn', icon: faLinkedin, placeholder: 'https://linkedin.com/in/keionv' },
 ];
 
 function upperFirst(str) {
@@ -73,20 +75,20 @@ export default function PageButtonsForm({ user, page }) {
   return (
     <SectionBox>
       <form action={saveButtons}>
-        <h2 className="text-2xl font-bold mb-4">Contacts</h2>
+        <h2 className="text-2xl font-bold mb-4 text-slate-50">Contacts</h2>
         <ReactSortable
           handle=".handle"
           list={activeButtons}
           setList={setActiveButtons}>
           {activeButtons.map(b => (
             <div key={b.key} className="mb-4 md:flex items-center">
-              <div className="w-56 flex h-full text-gray-700 p-2 gap-2 items-center">
+              <div className="w-56 flex h-full text-slate-200 p-2 gap-2 items-center">
               {isIconLoading ? (
                   <div className="animate-pulse bg-gray-300 w-4 h-4 rounded-full" />
                 ) : (
-                <FontAwesomeIcon
+                  <FontAwesomeIcon
                   icon={faGripLines}
-                  className="cursor-pointer text-gray-400 handle p-2" />
+                  className="cursor-pointer text-slate-500 handle p-2" />
                 )}
                 {isIconLoading ? (
                   <div className="animate-pulse bg-gray-300 w-4 h-4 rounded-full" />
@@ -97,7 +99,7 @@ export default function PageButtonsForm({ user, page }) {
               </div>
               <div className="grow flex">
                 <input
-                  className="rounded-md"
+                  className="rounded-md bg-slate-950 border border-slate-700 text-slate-100"
                   placeholder={b.placeholder}
                   name={b.key}
                   defaultValue={page.buttons?.[b.key] ?? ''} // Use optional chaining and provide a default value
@@ -106,20 +108,20 @@ export default function PageButtonsForm({ user, page }) {
                 <button
                   onClick={() => removeButton(b)}
                   type="button"
-                  className="py-2 px-4  bg-gray-300 cursor-pointer rounded-md hover:bg-red-500 hover:text-white">
+                  className="py-2 px-4 bg-slate-800 text-slate-100 cursor-pointer rounded-md hover:bg-red-500 hover:text-white border border-slate-700">
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
               </div>
             </div>
           ))}
         </ReactSortable>
-        <div className="flex flex-wrap gap-2 mt-4 border-y py-4">
+        <div className="flex flex-wrap gap-2 mt-4 border-y border-slate-800 py-4">
           {availableButtons.map(b => (
             <button
               key={b.key}
               type="button"
               onClick={() => addButtonToProfile(b)}
-              className="flex items-center gap-1 p-2 bg-gray-200 rounded-md hover:bg-gray-100">
+              className="flex items-center gap-1 p-2 bg-slate-900 text-slate-100 border border-slate-700 rounded-md hover:bg-slate-800">
               {isIconLoading ? (
                 <div className="animate-pulse bg-gray-300 w-4 h-4 rounded-full" />
               ) : (

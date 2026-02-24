@@ -11,12 +11,12 @@ export default function Pricing() {
   return (
     <div className="py-8 px-4">
       <main className="max-w-6xl mb-20 mx-auto mt-10">
-        <h1 className="text-center text-4xl font-bold text-gray-800 mb-20">
+        <h1 className="text-center text-4xl font-bold text-slate-50 mb-20">
           Pricing Plans
         </h1>
         <div className="flex flex-wrap justify-center gap-10">
           {/* Free Plan */}
-          <div className="w-full max-w-sm p-6 border rounded-lg shadow-md hover:shadow-lg transition-shadow bg-white">
+          <div className="w-full max-w-sm p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow bg-slate-800">
             <h2 className="text-2xl font-semibold text-center mb-4">Free</h2>
             <ul className="mb-6">
               <li className="mb-2">Basic Link Management</li>
@@ -26,7 +26,7 @@ export default function Pricing() {
             <div className="text-center">
               <Link
                 href="/account"
-                className="inline-block bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-200 transition-colors"
+                className="flex justify-center items-center gap-2 border border-indigo-500/60 p-2 px-4 rounded-full text-sm font-semibold text-slate-50 bg-indigo-600 hover:bg-indigo-500 hover:border-indigo-400 shadow-md shadow-indigo-500/30 hover:shadow-lg hover:shadow-indigo-500/50 transition-colors transition-transform duration-150 ease-out hover:-translate-y-0.5"
               >
                 Get Started
               </Link>

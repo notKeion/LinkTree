@@ -53,7 +53,7 @@ export default function PageSettingsForm({ page, user }) {
       <SectionBox>
         <form action={saveBaseSettings}>
           <div
-            className="py-4 -m-4 min-h-[300px] flex justify-center items-center bg-cover bg-center"
+            className="py-4 -m-4 min-h-[300px] flex justify-center items-center bg-cover bg-center rounded-2xl overflow-hidden"
             style={
               bgType === "color"
                 ? { backgroundColor: bgColor }
@@ -62,7 +62,7 @@ export default function PageSettingsForm({ page, user }) {
           >
             <div>
               <RadioTogglers
-                className="rounded-md"
+                className="rounded-md bg-slate-950/70 border border-slate-800 text-slate-100"
                 defaultValue={page.bgType}
                 options={[
                   {
@@ -87,9 +87,9 @@ export default function PageSettingsForm({ page, user }) {
                 onChange={(val) => setBgType(val)}
               />
               {bgType === "color" && (
-                <div className="bg-gray-200 shadow text-gray-700 p-2 mt-2 rounded-md">
-                  <div className="flex gap-2 justify-center">
-                    <span>Background color:</span>
+                <div className="bg-slate-950/80 border border-slate-700 text-slate-100 p-2 mt-2 rounded-md shadow-inner shadow-black/40">
+                  <div className="flex gap-2 justify-center items-center text-sm">
+                    <span className="text-slate-300">Background color:</span>
                     <input
                       type="color"
                       name="bgColor"
@@ -101,7 +101,7 @@ export default function PageSettingsForm({ page, user }) {
               )}
               {bgType === "image" && (
                 <div className="flex justify-center">
-                  <label className="bg-white shadow px-4 py-2 mt-2 flex gap-2 rounded-md hover:bg-gray-200">
+                  <label className="bg-slate-950/80 border border-slate-700 shadow px-4 py-2 mt-2 flex gap-2 rounded-md hover:bg-slate-900 text-slate-100 cursor-pointer transition-colors">
                     <input type="hidden" name="bgImage" value={bgImage} />
                     <input
                       type="file"
@@ -114,7 +114,7 @@ export default function PageSettingsForm({ page, user }) {
                       ) : (
                         <FontAwesomeIcon
                           icon={faCloudArrowUp}
-                          className="text-gray-700"
+                          className="text-slate-200"
                         />
                       )}
                       <span>Change image</span>
@@ -126,7 +126,7 @@ export default function PageSettingsForm({ page, user }) {
           </div>
           <div className="flex justify-center -mb-12">
             <div className="relative -top-8 w-[128px] h-[128px]">
-              <div className="overflow-hidden h-full rounded-full border-4 border-white shadow shadow-black/50">
+              <div className="overflow-hidden h-full rounded-full border-4 border-slate-900 shadow-xl shadow-black/70 bg-slate-900">
                 <Image
                   className="w-full h-full object-cover"
                   src={avatar}
@@ -137,7 +137,7 @@ export default function PageSettingsForm({ page, user }) {
               </div>
               <label
                 htmlFor="avatarIn"
-                className="absolute bottom-0 -right-2 bg-white p-2 rounded-full shadow shadow-black/50 aspect-square flex items-center cursor-pointer hover:bg-gray-200"
+                className="absolute bottom-0 -right-2 bg-slate-900 border border-slate-700 p-2 rounded-full shadow shadow-black/70 aspect-square flex items-center cursor-pointer hover:bg-slate-800 transition-colors"
               >
                 {isIconLoading ? (
                   <div className="animate-pulse bg-gray-400 w-4 h-4 rounded-full" />
@@ -159,7 +159,7 @@ export default function PageSettingsForm({ page, user }) {
               Display name
             </label>
             <input
-              className="rounded-md"
+              className="rounded-md bg-slate-950 border border-slate-700 text-slate-100"
               type="text"
               id="nameIn"
               name="displayName"
@@ -171,7 +171,7 @@ export default function PageSettingsForm({ page, user }) {
               Location
             </label>
             <input
-              className="rounded-md"
+              className="rounded-md bg-slate-950 border border-slate-700 text-slate-100"
               type="text"
               id="locationIn"
               name="location"
@@ -182,13 +182,13 @@ export default function PageSettingsForm({ page, user }) {
               Bio
             </label>
             <textarea
-              className="rounded-md"
+              className="rounded-md bg-slate-950 border border-slate-700 text-slate-100"
               name="bio"
               defaultValue={page.bio}
               id="bioIn"
               placeholder="Your bio goes here..."
             />
-            <div className="max-w-[200px] mx-auto mt-8 max-w-xs">
+            <div className="max-w-[200px] mx-auto mt-8">
               <SubmitButton>
                 {isIconLoading ? (
                   <div className="animate-pulse bg-gray-400 w-4 h-4 rounded-full" />

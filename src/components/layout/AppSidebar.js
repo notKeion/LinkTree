@@ -9,12 +9,14 @@ import {usePathname} from "next/navigation";
 export default function AppSidebar() {
   const path = usePathname();
   return (
-    <nav className="inline-flex mx-auto flex-col text-center mt-8 gap-2 text-gray-500">
+    <nav className="inline-flex mx-auto flex-col text-center mt-8 gap-2 text-slate-300">
       <Link
         href={'/account'}
         className={
-          "flex gap-4 p-2 "
-          + (path === '/account' ? 'text-blue-500 hover:underline' : 'hover:underline')
+          "flex gap-4 p-2 rounded-xl transition-colors "
+          + (path === '/account'
+            ? 'bg-slate-900 text-indigo-300 border border-indigo-500/60'
+            : 'text-slate-300 hover:text-indigo-300 hover:bg-slate-900/60')
         }>
         <FontAwesomeIcon
           fixedWidth={true}
@@ -26,8 +28,10 @@ export default function AppSidebar() {
       <Link
         href={'/analytics'}
         className={
-          "flex gap-4 p-2 "
-          + (path === '/analytics' ? 'text-blue-500 hover:underline' : 'hover:underline')
+          "flex gap-4 p-2 rounded-xl transition-colors "
+          + (path === '/analytics'
+            ? 'bg-slate-900 text-indigo-300 border border-indigo-500/60'
+            : 'text-slate-300 hover:text-indigo-300 hover:bg-slate-900/60')
         }>
         <FontAwesomeIcon
           fixedWidth={true}
@@ -38,10 +42,10 @@ export default function AppSidebar() {
       </Link>
       <LogoutButton
         iconLeft={true}
-        className={'flex gap-4 items-center text-gray-500 p-2 hover:underline'}
+        className={'flex gap-4 items-center text-slate-400 p-2 hover:text-indigo-300 transition-colors'}
         iconClasses={'w-6 h-6'}
       />
-      <Link href={'/'} className="flex items-center gap-2 text-xs text-gray-500 border-t pt-4 hover:underline">
+      <Link href={'/'} className="flex items-center gap-2 text-xs text-slate-500 border-t border-slate-800 pt-4 hover:text-indigo-300 transition-colors">
         <FontAwesomeIcon icon={faArrowLeft} className={'w-3 h-3'} />
         <span>Back to website</span>
       </Link>

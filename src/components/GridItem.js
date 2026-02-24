@@ -2,7 +2,7 @@ import React from 'react';
 
 const GridItem = ({ Icon, title, description }) => {
   return (
-    <div className="flex flex-col bg-white items-center p-4 border rounded-lg shadow-md">
+    <div className="flex flex-col bg-slate-800 items-center p-4 rounded-lg shadow-md">
       <div className="mb-4 mt-4">
         <Icon className="w-14 h-16 text-blue-500" />
       </div>

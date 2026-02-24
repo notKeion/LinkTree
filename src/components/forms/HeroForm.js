@@ -33,14 +33,14 @@ export default function HeroForm({user}) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="inline-flex items-center shadow-lg bg-white shadow-gray-500/20 rounded-md">
-          <span className="bg-white py-4 pl-4 rounded-md">
-            linktri.vercel.app/
+      className="inline-flex items-center shadow-lg bg-slate-800 shadow-gray-500/20 rounded-md">
+          <span className="bg-slate-800 py-4 pl-4 rounded-md font-bold">
+            linktree.vectro.us/
           </span>
       <input
         type="text"
-        className=""
-        style={{backgroundColor:'white',marginBottom:0,paddingLeft:0}}
+        className=" text-white py-4 px-2 w-40"
+        style={{backgroundColor:'transparent', border:'none', marginBottom:0,paddingLeft:0}}
         placeholder="username"/>
       <button
         type="submit"

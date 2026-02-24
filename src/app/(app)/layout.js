@@ -4,9 +4,11 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
- return (
+  return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-slate-950 text-slate-50">
+        {children}
+      </body>
     </html>
   )
 }

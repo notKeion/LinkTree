@@ -8,9 +8,32 @@ import mongoose from "mongoose";
 import {getServerSession} from "next-auth";
 import {redirect} from "next/navigation";
 import cloneDeep from 'clone-deep';
-export const metadata = {
-  title: 'LinkTri Clone | Account',
-  description: 'Share your links, social profiles, contact info and more on one page',
+export async function generateMetadata() {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return {
+      title: 'LinkTri Clone | Account',
+      description: 'Manage your LinkTri account and links.',
+    };
+  }
+
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    const page = await Page.findOne({ owner: session.user?.email });
+
+    const displayName = page?.displayName || session.user?.name || 'Your Account';
+    const bio = page?.bio || 'Manage your LinkTri profile, links, and appearance.';
+
+    return {
+      title: `${displayName} | Account`,
+      description: bio,
+    };
+  } catch (e) {
+    return {
+      title: 'LinkTri Clone | Account',
+      description: 'Manage your LinkTri account and links.',
+    };
+  }
 }
 export default async function AccountPage({searchParams}) {
   const session = await getServerSession(authOptions);
